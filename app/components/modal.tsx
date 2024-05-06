@@ -1,4 +1,5 @@
 "use client";
+import { CloseCircle } from "iconsax-react";
 import { Fragment, ReactNode } from "react";
 
 export type ModalProps = {
@@ -23,12 +24,12 @@ export default function Modal({
         readOnly
       />
       <div className="modal">
-        <div className={"modal-box rounded-[1.75rem] " + className}>
+        <div className={"modal-box  rounded-[1.75rem] " + className}>
           <button
             className="btn btn-circle btn-ghost btn-sm absolute top-2 right-2"
             onClick={onCancel}
           >
-            {/* <LucideIcon size={16} name="X" /> */}
+            <CloseCircle size="32" className="text-secondary" />
           </button>
           {children}
         </div>

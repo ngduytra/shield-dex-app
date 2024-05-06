@@ -1,6 +1,7 @@
 "use client";
-import Image from "next/image";
+
 import { useTheme } from "./providers/ui.provider";
+import { WalletButton } from "./solana/solana-provider";
 
 export default function Home() {
   const { theme, setTheme } = useTheme();
@@ -12,6 +13,7 @@ export default function Home() {
       <div>
         <p className="text-[--card]">Test</p>
       </div>
+      <WalletButton />
     </div>
   );
 }

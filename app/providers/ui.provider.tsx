@@ -4,6 +4,7 @@ import { create } from "zustand";
 import { persist, createJSONStorage, devtools } from "zustand/middleware";
 
 import { env } from "@/configs/env";
+import Header from "@/components/header/index";
 
 const autoTheme = (): Theme => {
   if (window.matchMedia("(prefers-color-scheme: light)").matches)
@@ -62,8 +63,13 @@ export default function UiProvider({ children }: { children: ReactNode }) {
   }, [theme]);
 
   return (
-    <div className="flex justify-center flex-row ">
-      <div className="container p-4">{children}</div>
+    <div className="flex justify-center flex-row">
+      <div className="container p-4">
+        <Header />
+        <div className="flex justify-center flex-row">
+          <div className="artboard phone-2">{children}</div>
+        </div>
+      </div>
     </div>
   );
 }

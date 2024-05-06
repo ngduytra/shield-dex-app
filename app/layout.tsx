@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-import "./globals.css";
 import UiProvider from "./providers/ui.provider";
+import { SolanaProvider } from "./solana/solana-provider";
+import { ReactQueryProvider } from "./providers/react-query-provider";
+import { ClusterProvider } from "./cluster/cluster-data-access";
+
+import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,13 +21,31 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" style={{ backgroundColor: "var(--bg-body)" }}>
       <head>
+        {/* Google Fonts */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        {/*eslint-disable-next-line @next/next/no-page-custom-font*/}
+        <link
+          href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,400;0,9..40,700;0,9..40,900;1,9..40,200;1,9..40,400;1,9..40,700;1,9..40,900&display=swap"
+          rel="stylesheet"
+        />
         {/* eslint-disable-next-line @next/next/no-sync-scripts */}
-        <script type="text/javascript" src="/script-theme.js"></script>
+        <script type="text/javascript" src="/theme-script.js"></script>
       </head>
-      <body className={inter.className}>
-        <UiProvider>{children}</UiProvider>
+      <body className="bg-[--bg-body]" style={{ height: "100%" }}>
+        <ReactQueryProvider>
+          <ClusterProvider>
+            <SolanaProvider>
+              <UiProvider>{children}</UiProvider>
+            </SolanaProvider>
+          </ClusterProvider>
+        </ReactQueryProvider>
       </body>
     </html>
   );
