@@ -3,15 +3,23 @@ import React, { useState } from "react";
 
 import Image from "next/image";
 import SolIcon from "@/assets/images/sol-icon.png";
+import { classNames as cx } from "@/utils/string";
 
-export default function TokenSelection() {
+export default function TokenSelection({
+  classNames = "",
+}: {
+  classNames?: string;
+}) {
   const [selectedToken, setSelectedToken] = useState("");
   const tokens = ["Sol", "Han Solo", "Greedo"];
 
   console.log("token", selectedToken);
   return (
     <select
-      className="select [--rounded-btn:1.5rem] border-[--stroke-default]  [--fallback-bc:red] w-28"
+      className={cx(
+        "select [--rounded-btn:1.5rem] border-[--stroke-default]  [--fallback-bc:red]",
+        classNames
+      )}
       onChange={(e) => setSelectedToken(e.target.value)}
     >
       {tokens.map((token) => (

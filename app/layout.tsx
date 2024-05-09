@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, IBM_Plex_Sans } from "next/font/google";
 
 import UiProvider from "./providers/ui.provider";
 import { SolanaProvider } from "./solana/solana-provider";
@@ -7,8 +7,13 @@ import { ReactQueryProvider } from "./providers/react-query-provider";
 import { ClusterProvider } from "./cluster/cluster-data-access";
 
 import "./globals.css";
+import { classNames } from "./utils/string";
 
 const inter = Inter({ subsets: ["latin"] });
+const ibmPlexSans = IBM_Plex_Sans({
+  weight: ["100", "200", "300", "400", "500", "600", "700"],
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -38,7 +43,10 @@ export default function RootLayout({
         {/* eslint-disable-next-line @next/next/no-sync-scripts */}
         <script type="text/javascript" src="/theme-script.js"></script>
       </head>
-      <body className="bg-[--bg-body]" style={{ height: "100%" }}>
+      <body
+        className={classNames("bg-[--bg-body]", ibmPlexSans.className)}
+        style={{ height: "100%" }}
+      >
         <ReactQueryProvider>
           <ClusterProvider>
             <SolanaProvider>

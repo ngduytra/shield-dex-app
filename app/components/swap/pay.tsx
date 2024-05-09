@@ -19,7 +19,7 @@ export default function Pay() {
           <p className="text-secondary text-sm">Balance: 10.5</p>
         </div>
         <div>
-          <TokenSelection />
+          <TokenSelection classNames="w-28" />
         </div>
       </div>
     </div>

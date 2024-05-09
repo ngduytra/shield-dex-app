@@ -18,8 +18,8 @@ export default function Receive() {
         <div>
           <p className="text-secondary text-sm">Balance: 12837810.5</p>
         </div>
-        <div>
-          <TokenSelection />
+        <div className="flex justify-end">
+          <TokenSelection classNames="w-28" />
         </div>
       </div>
     </div>
