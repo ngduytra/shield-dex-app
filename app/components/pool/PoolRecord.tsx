@@ -1,4 +1,6 @@
-import { Add, ArrowSwapHorizontal, Minus } from "iconsax-react";
+import { ArrowSwapHorizontal } from "iconsax-react";
+import ModalAddLiquidity from "./ModalAddLiqudity";
+import RemoveLiquidity from "./RemoveLiquidity";
 
 const PoolRecord = () => {
   return (
@@ -52,13 +54,8 @@ const PoolRecord = () => {
           <button className="w-10 h-10 rounded-full border border-[--stroke-default] flex items-center justify-center">
             <ArrowSwapHorizontal size={20} />
           </button>
-          <button className="w-10 h-10 rounded-full border border-[--stroke-default] flex items-center justify-center">
-            <Minus size={20} />
-          </button>
-          <button className="h-10 w-fit flex items-center justify-center gap-4 px-3 rounded-[100px] bg-primary text-black font-medium">
-            <Add size={20} />
-            Add liquidity
-          </button>
+          <RemoveLiquidity />
+          <ModalAddLiquidity />
         </div>
       </div>
     </div>

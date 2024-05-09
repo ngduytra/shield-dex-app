@@ -43,6 +43,7 @@ module.exports = {
           "--shadow": "#F3F3F3",
           "--stroke-default": "#E7E8E8",
           "--chart-up": "#008550",
+          "--oncard-bg-default": "#F3F3F3",
         },
       },
       {
@@ -70,6 +71,7 @@ module.exports = {
           "--label-active": "#F3F3F3",
           "--label-unactive": "#6E7271",
           "--chart-up": "#008550",
+          "--oncard-bg-default": "#272C2A",
         },
       },
     ],

@@ -1,4 +1,5 @@
 "use client";
+import { classNames } from "@/utils/string";
 import { CloseCircle } from "iconsax-react";
 import { Fragment, ReactNode } from "react";
 
@@ -24,7 +25,7 @@ export default function Modal({
         readOnly
       />
       <div className="modal">
-        <div className={"modal-box  rounded-[1.75rem] " + className}>
+        <div className={classNames("modal-box rounded-[1.75rem]", className)}>
           <button
             className="btn btn-circle btn-ghost btn-sm absolute top-2 right-2"
             onClick={onCancel}

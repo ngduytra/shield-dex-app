@@ -1,6 +1,5 @@
-import { Add, ElementPlus } from "iconsax-react";
-import PoolRecord from "./PoolRecord";
 import ModalCreatePool from "./ModalCreatePool";
+import PoolRecord from "./PoolRecord";
 
 const PoolTable = () => {
   return (
