@@ -7,11 +7,11 @@ import SolIcon from "@/assets/images/sol-icon.png";
 
 export default function MarketInfo() {
   return (
-    <div className="bg-[--bg-card] p-6 rounded-3xl flex justify-between relative">
+    <div className="bg-[--bg-header] p-6 rounded-3xl flex justify-between relative">
       <Maximize3 size="20" color="#6E7271" className="absolute top-2 right-2" />
       <div className="container space-y-8">
         <div className="flex flex-nowrap justify-between">
-          <div className="flex flex-nowrap items-center space-x-1">
+          <div className="flex flex-nowrap items-center space-x-1 text-primary-content">
             <div className="avatar">
               <div className="w-6 rounded-full">
                 <Image
@@ -36,7 +36,7 @@ export default function MarketInfo() {
           </div>
         </div>
         <div className="flex flex-nowrap justify-between">
-          <div className="flex flex-nowrap items-center space-x-1">
+          <div className="flex flex-nowrap items-center space-x-1 text-primary-content">
             <div className="avatar">
               <div className="w-6 rounded-full">
                 <Image

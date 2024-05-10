@@ -15,7 +15,7 @@ export default function CenterHeader() {
             "hover:bg-[--bg-header] rounded-3xl",
             pathName === "/swap"
               ? "bg-[--bg-header] text-[--label-active]"
-              : "text-[--label-active]/50"
+              : "text-[--disabled-color]"
           )}
         >
           <Link href={"/swap"}>Swap</Link>
@@ -25,7 +25,7 @@ export default function CenterHeader() {
             "hover:bg-[--bg-header] rounded-3xl",
             pathName === "/pool"
               ? "bg-[--bg-header] text-[--label-active]"
-              : "text-[--label-active]/50"
+              : "text-[--disabled-color]"
           )}
         >
           <Link href={"/pool"}>Pool</Link>

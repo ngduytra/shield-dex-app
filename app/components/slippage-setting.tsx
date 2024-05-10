@@ -18,7 +18,7 @@ export default function SlippageSetting() {
   return (
     <div className="flex justify-end">
       <button
-        className="btn btn-ghost text-secondary"
+        className="btn btn-ghost text-secondary font-light"
         onClick={() => setOpen(true)}
       >
         <EmptyWallet size="16" />

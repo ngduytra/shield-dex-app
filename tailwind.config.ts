@@ -52,7 +52,7 @@ module.exports = {
           primary: "#0EF195",
           "--card": "red",
           "primary-content": "#fff",
-          secondary: "#5d6ccf",
+          secondary: "#9FA1A0",
           "--icon-secondary": "#6E7271",
           "--danger": "#CC3904",
           "secondary-content": "#ffffff",
