@@ -72,6 +72,7 @@ module.exports = {
           "--label-unactive": "#6E7271",
           "--chart-up": "#008550",
           "--oncard-bg-default": "#272C2A",
+          "--stroke-default": "#3E4341",
         },
       },
     ],

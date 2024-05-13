@@ -1,6 +1,5 @@
-import React from "react";
 
-import TokenSelection from "../token-selection";
+import ModalTokenSelection from "../modal-token-selection";
 
 export default function Pay() {
   return (
@@ -23,7 +22,7 @@ export default function Pay() {
           <p className="text-secondary text-sm">Balance: 10.5</p>
         </div>
         <div>
-          <TokenSelection classNames="w-28" />
+          <ModalTokenSelection />
         </div>
       </div>
     </div>

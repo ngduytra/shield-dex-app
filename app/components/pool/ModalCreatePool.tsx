@@ -3,7 +3,7 @@
 import { Add, ArrowDown2, ArrowUp2, Crown } from "iconsax-react";
 import { useEffect, useState } from "react";
 import Modal from "../modal";
-import TokenSelection from "../token-selection";
+import ModalTokenSelection from "../modal-token-selection";
 
 const feeOptions = [
   {
@@ -75,8 +75,8 @@ const ModalCreatePool = () => {
         <div className="mb-6">
           <p className="font-medium mb-2">Select token pair</p>
           <div className="flex gap-4">
-            <TokenSelection classNames="flex-1" />
-            <TokenSelection classNames="flex-1" />
+            <ModalTokenSelection />
+            <ModalTokenSelection />
           </div>
         </div>
         <div className="mb-6">

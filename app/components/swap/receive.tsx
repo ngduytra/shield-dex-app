@@ -1,6 +1,5 @@
-import React from "react";
 
-import TokenSelection from "../token-selection";
+import ModalTokenSelection from "../modal-token-selection";
 
 export default function Receive() {
   return (
@@ -23,7 +22,7 @@ export default function Receive() {
           <p className="text-secondary text-sm">Balance: 12837810.5</p>
         </div>
         <div className="flex justify-end">
-          <TokenSelection classNames="w-28" />
+          <ModalTokenSelection />
         </div>
       </div>
     </div>
