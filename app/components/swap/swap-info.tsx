@@ -85,7 +85,7 @@ export default function SwapInfo() {
               className="container  flex justify-between"
               key={info.label.toString()}
             >
-              <p className="text-secondary text-sm">{info.label}</p>
+              <div className="text-secondary text-sm">{info.label}</div>
               {info.content}
             </div>
           );

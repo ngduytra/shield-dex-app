@@ -2425,5 +2425,5 @@ export const IDL: ShieldDexPg = {
 
 // After updating your program ID (e.g. after running `anchor keys sync`) update the value below.
 export const programId = new PublicKey(
-  "6ygp2zhLR4Mp7z6PDRp5K2W314YAGJ2Sx6WUp72dNF4H"
+  "7xCZgNDZ6da6Rup5eztPfPxuVNwVuvRac3nQK9U5ggEg"
 );

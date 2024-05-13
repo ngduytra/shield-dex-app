@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@coral-xyz/anchor": "^0.29.0",
+    "@coral-xyz/spl-token": "^0.30.0",
+    "@solana/spl-token": "^0.4.6",
     "@solana/wallet-adapter-base": "^0.9.23",
     "@solana/wallet-adapter-react": "^0.15.35",
     "@solana/wallet-adapter-react-ui": "^0.9.35",
@@ -18,11 +20,14 @@
     "@tailwindcss/typography": "^0.5.13",
     "@tanstack/react-query": "^5.34.1",
     "@tanstack/react-query-next-experimental": "^5.34.1",
+    "axios": "^1.6.8",
     "iconsax-react": "^0.0.8",
     "jotai": "^2.8.0",
     "next": "14.2.2",
     "react": "^18.2.0",
     "react-dom": "^18",
+    "react-hot-toast": "^2.4.1",
+    "react-use": "^17.5.0",
     "zustand": "^4.5.2"
   },
   "devDependencies": {

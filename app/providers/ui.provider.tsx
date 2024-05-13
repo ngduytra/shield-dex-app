@@ -1,4 +1,6 @@
 "use client";
+
+import { Toaster } from "react-hot-toast";
 import { Fragment, ReactNode, useEffect } from "react";
 import { create } from "zustand";
 import { persist, createJSONStorage, devtools } from "zustand/middleware";
@@ -66,6 +68,7 @@ export default function UiProvider({ children }: { children: ReactNode }) {
     <div className="flex justify-center flex-row">
       <div className="container p-4">
         <Header />
+        <Toaster position="bottom-right" />
         <div className="flex justify-center flex-row">
           <div className="artboard phone-2">{children}</div>
         </div>

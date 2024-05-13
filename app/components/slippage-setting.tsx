@@ -3,6 +3,7 @@ import { EmptyWallet } from "iconsax-react";
 import React, { useState } from "react";
 
 import Modal from "./modal";
+import { useSwapGlob } from "./swap";
 
 const enum Slippage {
   Auto = "auto",
@@ -12,8 +13,17 @@ const enum Slippage {
   VeryHigh = 5,
 }
 
+const SlippageValue: Record<Slippage, number> = {
+  [Slippage.Auto]: 0,
+  [Slippage.Low]: 0.1,
+  [Slippage.Medium]: 0.5,
+  [Slippage.High]: 1,
+  [Slippage.VeryHigh]: 5,
+};
+
 export default function SlippageSetting() {
   const [open, setOpen] = useState(false);
+  const [swapGlob, setSwapGlob] = useSwapGlob();
   const [slippage, setSlippage] = useState(Slippage.Auto);
   return (
     <div className="flex justify-end">
@@ -33,14 +43,20 @@ export default function SlippageSetting() {
               <input
                 type="radio"
                 name="slippage-1"
-                value={Slippage.Auto}
+                value={SlippageValue[Slippage.Auto]}
                 className={`radio rounded-md rounded-br-none rounded-tr-none h-11 w-full z-50 ${
-                  slippage === Slippage.Auto
+                  swapGlob?.params.limit === SlippageValue[Slippage.Auto]
                     ? "radio-primary checked:[--tw-bg-opacity:0]"
                     : ""
                 }`}
                 onClick={() => {
-                  setSlippage(Slippage.Auto);
+                  setSwapGlob((prev) => ({
+                    ...prev,
+                    params: {
+                      ...prev?.params,
+                      limit: SlippageValue[Slippage.Auto],
+                    },
+                  }));
                 }}
               />
             </div>
@@ -49,14 +65,20 @@ export default function SlippageSetting() {
               <input
                 type="radio"
                 name="slippage-2"
-                value={Slippage.Low}
+                value={SlippageValue[Slippage.Low]}
                 className={`radio rounded-none h-11 w-full z-50 ${
-                  slippage === Slippage.Low
+                  swapGlob?.params.limit === SlippageValue[Slippage.Low]
                     ? "radio-primary checked:[--tw-bg-opacity:0]"
                     : ""
                 }`}
                 onClick={() => {
-                  setSlippage(Slippage.Low);
+                  setSwapGlob((prev) => ({
+                    ...prev,
+                    params: {
+                      ...prev?.params,
+                      limit: SlippageValue[Slippage.Low],
+                    },
+                  }));
                 }}
               />
             </div>
@@ -65,7 +87,21 @@ export default function SlippageSetting() {
               <input
                 type="radio"
                 name="radio-1"
-                className="radio rounded-none h-11 w-full"
+                value={SlippageValue[Slippage.Medium]}
+                className={`radio rounded-none h-11 w-full z-50 ${
+                  swapGlob?.params.limit === SlippageValue[Slippage.Medium]
+                    ? "radio-primary checked:[--tw-bg-opacity:0]"
+                    : ""
+                }`}
+                onClick={() => {
+                  setSwapGlob((prev) => ({
+                    ...prev,
+                    params: {
+                      ...prev?.params,
+                      limit: SlippageValue[Slippage.Medium],
+                    },
+                  }));
+                }}
               />
             </div>
             <div className="relative w-1/5 flex justify-center items-center">
@@ -73,7 +109,21 @@ export default function SlippageSetting() {
               <input
                 type="radio"
                 name="radio-1"
-                className="radio rounded-none h-11 w-full"
+                value={SlippageValue[Slippage.High]}
+                className={`radio rounded-none h-11 w-full z-50 ${
+                  swapGlob?.params.limit === SlippageValue[Slippage.High]
+                    ? "radio-primary checked:[--tw-bg-opacity:0]"
+                    : ""
+                }`}
+                onClick={() => {
+                  setSwapGlob((prev) => ({
+                    ...prev,
+                    params: {
+                      ...prev?.params,
+                      limit: SlippageValue[Slippage.High],
+                    },
+                  }));
+                }}
               />
             </div>
             <div className="relative w-1/5 flex justify-center items-center">
@@ -81,11 +131,28 @@ export default function SlippageSetting() {
               <input
                 type="radio"
                 name="radio-1"
-                className="radio rounded-md rounded-bl-none rounded-tl-none h-11 w-full"
+                value={SlippageValue[Slippage.VeryHigh]}
+                className={`radio rounded-md rounded-bl-none rounded-tl-none h-11 w-full ${
+                  swapGlob?.params.limit === SlippageValue[Slippage.VeryHigh]
+                    ? "radio-primary checked:[--tw-bg-opacity:0]"
+                    : ""
+                }`}
+                onClick={() => {
+                  setSwapGlob((prev) => ({
+                    ...prev,
+                    params: {
+                      ...prev?.params,
+                      limit: SlippageValue[Slippage.VeryHigh],
+                    },
+                  }));
+                }}
               />
             </div>
           </div>
-          <button className="container btn btn-primary rounded-3xl">
+          <button
+            className="container btn btn-primary rounded-3xl"
+            onClick={() => setOpen(false)}
+          >
             Save
           </button>
         </div>
