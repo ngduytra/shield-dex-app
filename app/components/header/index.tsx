@@ -6,7 +6,7 @@ import RightHeader from "./right-header";
 
 export default function Header() {
   return (
-    <div className="navbar bg-base-100 bg-[--bg-header] rounded-2xl">
+    <div className="navbar bg-[--bg-header] rounded-2xl">
       <LeftHeader />
       <CenterHeader />
       <RightHeader />

@@ -8,6 +8,8 @@ import { useAnchorProvider } from "@/solana/solana-provider";
 import { utils } from "@coral-xyz/anchor";
 import { useTokenPriceCGK } from "@/hooks/useCoinGecko";
 
+import ModalTokenSelection from "../modal-token-selection";
+
 export default function Pay() {
   const provider = useAnchorProvider();
   const [swapGlob, setSwapGlob] = useSwapGlob();
@@ -62,7 +64,7 @@ export default function Pay() {
           </p>
         </div>
         <div>
-          <TokenSelection />
+          <ModalTokenSelection />
         </div>
       </div>
     </div>

@@ -11,5 +11,5 @@ export default function layoutSwap({
 }: {
   children: React.ReactNode;
 }) {
-  return <Fragment>{children}</Fragment>;
+  return <div className="flex justify-center flex-row">{children}</div>;
 }

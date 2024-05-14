@@ -69,9 +69,10 @@ export default function UiProvider({ children }: { children: ReactNode }) {
       <div className="container p-4">
         <Header />
         <Toaster position="bottom-right" />
-        <div className="flex justify-center flex-row">
+        {/* <div className="flex justify-center flex-row">
           <div className="artboard phone-2">{children}</div>
-        </div>
+        </div> */}
+        x{children}
       </div>
     </div>
   );

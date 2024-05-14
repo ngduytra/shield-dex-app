@@ -9,7 +9,7 @@ export default function SwapInfo() {
       {
         label: "Exchange rate",
         content: (
-          <div className="flex flex-nowrap items-center space-x-2">
+          <div className="flex flex-nowrap items-center space-x-2 text-primary-content">
             <ArrowSwapHorizontal size={16} />
             <p className="font-bold">1 SOL ~ 1,5 FCON</p>
           </div>
@@ -71,8 +71,8 @@ export default function SwapInfo() {
   }, []);
 
   return (
-    <div className="bg-[--bg-card] p-4 rounded-2xl ">
-      <div className=" space-y-3">
+    <div className="bg-[--bg-header] p-4 rounded-2xl ">
+      <div className=" space-y-3 text-primary-content">
         {infos().map((info, idx) => {
           // if (idx > 2) {
           //   <div className="container flex justify-between" key={info.label}>
