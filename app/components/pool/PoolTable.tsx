@@ -1,5 +1,5 @@
-import ModalCreatePool from "./ModalCreatePool";
 import PoolRecord from "./PoolRecord";
+import ModalCreatePool from "./create-pool-modal";
 
 const PoolTable = () => {
   return (
@@ -48,10 +48,10 @@ const PoolTable = () => {
           <div className="flex-1">Fee 24H</div>
         </div>
         <div className="w-full">
+          {/* <PoolRecord />
           <PoolRecord />
           <PoolRecord />
-          <PoolRecord />
-          <PoolRecord />
+          <PoolRecord /> */}
         </div>
       </div>
     </div>

@@ -1,32 +1,20 @@
+"use client";
 import React, { useState } from "react";
 
-import TokenSelection from "../token-selection";
 import { useSwapGlob } from ".";
 import { useTokenAccountBalance } from "@/hooks/useAccountData";
-import { PublicKey } from "@solana/web3.js";
-import { useAnchorProvider } from "@/solana/solana-provider";
-import { utils } from "@coral-xyz/anchor";
-import { useTokenPriceCGK } from "@/hooks/useCoinGecko";
+import { useTokenPriceCGKById } from "@/hooks/useCoinGecko";
 
 import ModalTokenSelection from "../modal-token-selection";
 
 export default function Pay() {
-  const provider = useAnchorProvider();
   const [swapGlob, setSwapGlob] = useSwapGlob();
   const [tokenId, setTokenId] = useState("solana");
-  const tokenData = useTokenAccountBalance({
-    address: utils.token.associatedAddress({
-      owner: provider.publicKey,
-      mint: new PublicKey(
-        swapGlob?.accounts?.bidMint ||
-          "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU"
-      ),
-    }),
-  });
-  const { data } = useTokenPriceCGK({ id: tokenId });
-
-  console.log("tokenData", data?.data[tokenId].usd);
-  console.log("bidAmount: ", swapGlob?.params?.bidAmount);
+  const tokenData = useTokenAccountBalance(
+    // swapGlob?.accounts?.bidMint ||
+    "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU"
+  );
+  const { data } = useTokenPriceCGKById({ id: tokenId });
 
   return (
     <div className="bg-[--bg-card] p-4 rounded-2xl flex justify-between">
@@ -41,12 +29,11 @@ export default function Pay() {
             placeholder="0.00"
             className="input p-0 focus:outline-none focus:border-transparent border-none w-5/6 max-w-xs text-2xl font-bold"
             onChange={(e) => {
-              console.log("ajasjdkajsk:", e.target.value);
               setSwapGlob((prev) => ({
                 ...prev,
                 params: {
                   ...prev?.params,
-                  bidAmount: e.target.value,
+                  bidAmount: Number(e.target.value),
                 },
               }));
             }}
@@ -64,7 +51,18 @@ export default function Pay() {
           </p>
         </div>
         <div>
-          <ModalTokenSelection />
+          <ModalTokenSelection
+            selectedAddress={swapGlob.accounts.bidMint}
+            onChange={(mint) => {
+              setSwapGlob((prev) => ({
+                ...prev,
+                accounts: {
+                  ...prev?.accounts,
+                  askMint: mint.address,
+                },
+              }));
+            }}
+          />
         </div>
       </div>
     </div>

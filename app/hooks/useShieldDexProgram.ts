@@ -18,6 +18,7 @@ import {
   SwapParams,
 } from "@/types/program";
 import { useTransactionToast } from "./useTransactionToast";
+import { PublicKey } from "@solana/web3.js";
 
 export const useFetchOnePlatformConfig = (address: string) => {
   const provider = useAnchorProvider();
@@ -57,7 +58,7 @@ export function useShieldDexUiProgram() {
     }) => {
       const platformConfig = new web3.Keypair();
       return program.methods
-        .createPlatformConfig(params.amount)
+        .createPlatformConfig(new BN(params.amount))
         .accounts({
           owner: provider.publicKey,
           platformConfig: platformConfig.publicKey,
@@ -130,11 +131,11 @@ export function useShieldDexUiProgram() {
             mint: lpMintAB,
           }),
           escrow: escrowAB,
-          taxman: provider.publicKey,
+          taxman: new PublicKey("CVkbpNdrD1hb6TDwiyaoEyrDUft4T7aM5PQifmtCnGb1"),
           tokenProgram: utils.token.TOKEN_PROGRAM_ID,
           associatedTokenProgram: utils.token.ASSOCIATED_PROGRAM_ID,
           systemProgram: web3.SystemProgram.programId,
-          // rent: web3.SYSVAR_RENT_PUBKEY,
+          rent: web3.SYSVAR_RENT_PUBKEY,
         })
         .signers([poolAB])
         .rpc();
@@ -143,7 +144,6 @@ export function useShieldDexUiProgram() {
       transactionToast(signature, "Initialized successfully");
     },
     onError: (e) => {
-      console.log(e);
       toast.error("Failed to run program");
     },
   });
@@ -203,7 +203,6 @@ export function useShieldDexUiProgram() {
       transactionToast(signature, "Swapped successfully");
     },
     onError: (e) => {
-      console.log(e);
       toast.error("Failed to swap ");
     },
   });

@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
+import Image from "next/image";
 
 import SolIcon from "@/assets/images/sol-icon.png";
 import { classNames as cx } from "@/utils/string";
-import Image from "next/image";
 
 export default function TokenSelection({
   classNames = "",

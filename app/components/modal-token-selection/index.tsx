@@ -1,61 +1,85 @@
-import FconIcon from "@/assets/images/fcon-logo.png";
-import SolIcon from "@/assets/images/sol-icon.png";
-import { TokenSelection } from "@/types/token";
+"use client";
+import { useEffect, useMemo, useState } from "react";
+import LazyLoad from "react-lazy-load";
+
 import { ArrowDown2 } from "iconsax-react";
 import Image from "next/image";
-import { useState } from "react";
 import Modal from "../modal";
+import Island from "../island";
+
+import { useMintStore, useSearchMint } from "@/providers/mint.provider";
+
+import { getUnknownToken } from "@/helpers";
+import { useRandomMintMetadata } from "@/hooks/useTokenInfo";
 
 const RenderToken = ({
   onClick,
   token,
 }: {
   onClick: () => void;
-  token: TokenSelection;
+  token: MintMetadata;
 }) => {
-  const { disabled, image, name, symbol } = token;
+  const { logoURI, symbol } = token;
   return (
     <div
       onClick={onClick}
       className="w-fit rounded-[30px] pl-1 py-[6px] pr-2 border border-[--stroke-default] flex items-center gap-2 cursor-pointer"
     >
-      <Image src={image} width={24} height={24} alt="token" />
+      <Image src={logoURI} width={24} height={24} alt="token" />
       <p className="text-primary-content leading-6">{symbol}</p>
     </div>
   );
 };
 
-const tokens: TokenSelection[] = [
-  {
-    name: "SpaceFalcon",
-    symbol: "FCON",
-    image: FconIcon.src,
-    disabled: false,
-  },
-  {
-    name: "Solana",
-    symbol: "SOL",
-    image: SolIcon.src,
-    disabled: false,
-  },
-  {
-    name: "USD Coin",
-    symbol: "USDC",
-    image: SolIcon.src,
-    disabled: false,
-  },
-];
+const RenderCommonToken = ({ mint }: { mint: MintMetadata }) => {
+  return (
+    <>
+      <Image src={mint.logoURI} width={36} height={36} alt="list-token" />
+      <div>
+        <p className="text-primary-content">{mint.name}</p>
+        <p className="text-secondary text-[14px]">{mint.symbol}</p>
+      </div>
+    </>
+  );
+};
 
-const ModalTokenSelection = () => {
+type ModalTokenSelectionProps = {
+  selectedAddress: string;
+  onChange: (t: MintMetadata) => void;
+};
+
+const ModalTokenSelection = ({
+  selectedAddress,
+  onChange,
+}: ModalTokenSelectionProps) => {
   const [open, setOpen] = useState(false);
-  const [selectedToken, setSelectedToken] = useState<TokenSelection>(tokens[0]);
+  const [text, setText] = useState("");
+  const metadata = useMintStore(({ metadata }) => Object.values(metadata));
+  const [mints, setMints] = useState<MintMetadata[] | undefined>();
+  const randMints = useRandomMintMetadata();
+  const search = useSearchMint();
+  const selectedToken = useMemo(() => {
+    const tokenInfo = metadata.find((mint) => mint.address === selectedAddress);
+    if (!tokenInfo) return getUnknownToken(selectedAddress);
+    return tokenInfo;
+  }, [metadata, selectedAddress]);
+
+  useEffect(() => {
+    if (!text.length) setMints(undefined);
+    else if (text.length <= 2) setMints([]);
+    else setMints(search(text).map(({ item }) => item));
+  }, [text, search]);
+
+  useEffect(() => {
+    if (!open) setText("");
+  }, [open]);
 
   const toggle = () => {
     setOpen(!open);
   };
 
-  const handleSetToken = (t: TokenSelection) => {
-    setSelectedToken(t);
+  const handleSetToken = (t: MintMetadata) => {
+    onChange(t);
     toggle();
   };
 
@@ -66,7 +90,7 @@ const ModalTokenSelection = () => {
         className="rounded-[30px] text-primary-content p-3 border border-[--stroke-default] inline-flex items-center gap-2"
       >
         <Image
-          src={selectedToken?.image}
+          src={selectedToken?.logoURI || ""}
           width={24}
           height={24}
           alt="selected-token"
@@ -95,39 +119,38 @@ const ModalTokenSelection = () => {
             type="text"
             className="grow focus:ring-0"
             placeholder="Search name or paste address"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
           />
         </label>
-        <div className="pb-6 mb-6 border-b border-[--stroke-default]">
-          <p className="mb-2 text-secondary font-light">Popular tokens</p>
-          <div className="flex items-center gap-4">
-            {tokens.map((token, idx) => (
-              <RenderToken
-                key={`token-select-${idx}`}
-                onClick={() => handleSetToken(token)}
-                token={token}
-              />
+        <Island>
+          <div className="pb-6 mb-6 border-b border-[--stroke-default]">
+            <p className="mb-2 text-secondary font-light">Popular tokens</p>
+            <div className="flex items-center gap-4">
+              {[]?.map((token, idx) => (
+                <LazyLoad height={64} key={`token-select-${idx}`}>
+                  <RenderToken
+                    onClick={() => handleSetToken(token)}
+                    token={token}
+                  />
+                </LazyLoad>
+              ))}
+            </div>
+          </div>
+          <div className="flex flex-col gap-4">
+            {(mints || randMints)?.map((mint, idx) => (
+              <div
+                key={idx}
+                onClick={() => handleSetToken(mint)}
+                className="p-2 rounded-lg flex gap-3 items-center cursor-pointer duration-150 ease-linear transition-all hover:bg-secondary/10"
+              >
+                <LazyLoad height={64}>
+                  <RenderCommonToken mint={mint} />
+                </LazyLoad>
+              </div>
             ))}
           </div>
-        </div>
-        <div className="flex flex-col gap-4">
-          {tokens.map((token, idx) => (
-            <div
-              onClick={() => handleSetToken(token)}
-              className="p-2 rounded-lg flex gap-3 items-center cursor-pointer duration-150 ease-linear transition-all hover:bg-secondary/10"
-            >
-              <Image
-                src={token.image}
-                width={36}
-                height={36}
-                alt="list-token"
-              />
-              <div>
-                <p className="text-primary-content">{token.name}</p>
-                <p className="text-secondary text-[14px]">{token.symbol}</p>
-              </div>
-            </div>
-          ))}
-        </div>
+        </Island>
       </Modal>
     </>
   );

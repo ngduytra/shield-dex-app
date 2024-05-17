@@ -1,11 +1,15 @@
+"use client";
+import { useTVL } from "@/hooks/useTVL";
 import { Chart, DollarSquare } from "iconsax-react";
 
 const TVL = () => {
+  const tvl = useTVL();
+  if (tvl.isLoading) return <div>Loadding...</div>;
   return (
     <div className="flex justify-center gap-8">
       <div className="rounded-[20px] bg-white p-4 justify-between w-[268px] flex flex-col gap-3">
         <div className="flex justify-between items-center">
-          <p className="text-2xl font-bold">$782,568.635</p>
+          <p className="text-2xl font-bold">${tvl.data?.toFixed(2)}</p>
           <div className="bg-[#D9EDE5] rounded-lg w-9 h-9 flex items-center justify-center">
             <DollarSquare className="text-[--chart-up]" />
           </div>

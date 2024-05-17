@@ -2,11 +2,7 @@
 import React, { useEffect } from "react";
 import { createGlobalState } from "react-use";
 
-import {
-  ArrangeVerticalCircle,
-  ArrowSwapHorizontal,
-  ArrowSwapVertical,
-} from "iconsax-react";
+import { ArrangeVerticalCircle, ArrowSwapHorizontal } from "iconsax-react";
 
 import SlippageSetting from "../slippage-setting";
 import Pay from "./pay";
@@ -16,17 +12,29 @@ import {
   useFetchOnePlatformConfig,
   useShieldDexUiProgram,
 } from "@/hooks/useShieldDexProgram";
-import { BN } from "@coral-xyz/anchor";
-import Texture from "@/utils/texture";
+
 import { useAnchorProvider } from "@/solana/solana-provider";
-import { PublicKey } from "@solana/web3.js";
+
 import toast from "react-hot-toast";
-import { SwapAccounts, SwapParams } from "@/types/program";
+import {
+  NomalizedSwapAccounts,
+  NomalizedSwapParams,
+} from "@/types/normalized-program-type";
 
 export const useSwapGlob = createGlobalState<{
-  accounts: SwapAccounts;
-  params: SwapParams;
-}>();
+  accounts: NomalizedSwapAccounts;
+  params: NomalizedSwapParams;
+}>({
+  accounts: {
+    bidMint: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+    askMint: "SENBBKVCM7homnf5RX9zqpf1GFe935hnbU4uVzY1Y6M",
+    taxman: "GZS278mUf69n8Fw5NjRYiPs6fABCzApHNnyVXQtJDEh7",
+  },
+  params: {
+    bidAmount: 0,
+    limit: 0,
+  },
+});
 
 export default function Swap() {
   const provider = useAnchorProvider();
@@ -47,10 +55,22 @@ export default function Swap() {
 
   return (
     <div className="space-y-2">
-      {/* <button onClick={() => toast.success("test")}>test</button>
-      <p className="text-2xl font-bold">
+      <div>
+        {fetchPool.data &&
+          fetchPool.data?.map((pool) => {
+            return (
+              <p className="text-2xl font-bold" key={pool.publicKey.toBase58()}>
+                {JSON.stringify(pool)}
+              </p>
+            );
+          })}
+      </div>
+
+      {/* <p className="text-2xl font-bold">
         {JSON.stringify(fetchPlatformConfig.data)}
-      </p>
+      </p> */}
+      {/* <button onClick={() => toast.success("test")}>test</button>
+      
       <p className="text-2xl font-bold">{JSON.stringify(fetchPool.data)}</p>
       <button
         onClick={async () => {

@@ -30,7 +30,6 @@ export const WalletButton = dynamic(
 export function SolanaProvider({ children }: { children: ReactNode }) {
   const { cluster } = useCluster();
 
-  console.log("thong tin cluster", cluster);
   const endpoint = useMemo(() => cluster.endpoint, [cluster]);
   const onError = useCallback((error: WalletError) => {
     console.error(error);

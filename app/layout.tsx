@@ -8,6 +8,7 @@ import { ClusterProvider } from "./cluster/cluster-data-access";
 
 import "./globals.css";
 import { classNames } from "./utils/string";
+import MintProvider from "./providers/mint.provider";
 
 const inter = Inter({ subsets: ["latin"] });
 const ibmPlexSans = IBM_Plex_Sans({
@@ -50,7 +51,9 @@ export default function RootLayout({
         <ReactQueryProvider>
           <ClusterProvider>
             <SolanaProvider>
-              <UiProvider>{children}</UiProvider>
+              <MintProvider>
+                <UiProvider>{children}</UiProvider>
+              </MintProvider>
             </SolanaProvider>
           </ClusterProvider>
         </ReactQueryProvider>
