@@ -26,10 +26,13 @@ const PoolTable = () => {
           </svg>
           <input type="text" className="grow" placeholder="Search" />
         </label>
-        <select className="select rounded-[50px] bg-transparent border focus:border-[--stroke-default] border-[--stroke-default] focus:outline-none focus:ring-0">
-          <option selected>1D</option>
-          <option>1W</option>
-          <option>1M</option>
+        <select
+          defaultValue={"1D"}
+          className="select rounded-[50px] bg-transparent border focus:border-[--stroke-default] border-[--stroke-default] focus:outline-none focus:ring-0"
+        >
+          <option value="1D">1D</option>
+          <option value="1W">1W</option>
+          <option value="1M">1M</option>
         </select>
         <label className="cursor-pointer label flex gap-2">
           <input
@@ -48,10 +51,10 @@ const PoolTable = () => {
           <div className="flex-1">Fee 24H</div>
         </div>
         <div className="w-full">
-          {/* <PoolRecord />
           <PoolRecord />
           <PoolRecord />
-          <PoolRecord /> */}
+          <PoolRecord />
+          <PoolRecord />
         </div>
       </div>
     </div>

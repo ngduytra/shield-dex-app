@@ -5,6 +5,7 @@ import TokenSelection from "@/components/token-selection";
 import { Add, AddSquare } from "iconsax-react";
 import { useState } from "react";
 import AddLiquidityDetail from "./AddLiquidityDetail";
+import ModalTokenSelection from "@/components/modal-token-selection";
 
 const ModalAddLiquidity = () => {
   const [open, setOpen] = useState(false);
@@ -35,7 +36,7 @@ const ModalAddLiquidity = () => {
               className="focus:ring-0 focus:outline-none h-[35px] text-lg placeholder:text-lg"
               placeholder="0.00"
             />
-            <TokenSelection />
+            <ModalTokenSelection onChange={() => {}} selectedAddress="" />
           </div>
           <div className="text-[--disabled-color] text-[14px] flex items-center justify-between">
             <p>$925</p>
@@ -55,7 +56,7 @@ const ModalAddLiquidity = () => {
               className="focus:ring-0 focus:outline-none h-[35px] text-lg placeholder:text-lg"
               placeholder="0.00"
             />
-            <TokenSelection />
+            <ModalTokenSelection onChange={() => {}} selectedAddress="" />
           </div>
           <div className="text-[--disabled-color] text-[14px] flex items-center justify-between">
             <p>$925</p>
