@@ -10,7 +10,7 @@ import { Route, useAllRoutes } from "./useSwapHook";
 export const useRoutes = () => {
   const [availRoutes, setAvailRoutes] = useState<Route[][]>([]);
   const allRoutes = useAllRoutes();
-  const { swapGlob, setSwapGlob } = useSwapGlob();
+  const [swapGlob, setSwapGlob] = useSwapGlob();
   //   const bidMintAddress = useSwapStore(({ bidMintAddress }) => bidMintAddress);
   //   const askMintAddress = useSwapStore(({ askMintAddress }) => askMintAddress);
   const isValidRoute = (route: Route[]) => {
