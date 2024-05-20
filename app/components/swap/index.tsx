@@ -12,7 +12,7 @@ import {
   useFetchOnePlatformConfig,
   useShieldDexUiProgram,
 } from "@/hooks/useShieldDexProgram";
-import { ShieldSwapRoute, useSwap } from "@/hooks/useSwapHook";
+import { ShieldSwapRoute } from "@/hooks/useSwapHook";
 
 import { useAnchorProvider } from "@/solana/solana-provider";
 

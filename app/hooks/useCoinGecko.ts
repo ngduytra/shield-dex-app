@@ -1,9 +1,6 @@
-import { TOKEN_2022_PROGRAM_ID, TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import { useConnection } from "@solana/wallet-adapter-react";
-import { PublicKey } from "@solana/web3.js";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useCallback } from "react";
 
 export function useTokenPriceCGKById({ id }: { id: string }) {
   const { connection } = useConnection();

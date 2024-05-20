@@ -8,6 +8,10 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "resolutions": {
+    "@solana/buffer-layout": "^4.0.1",
+    "@solana/web3.js": "^1.90.1"
+  },
   "dependencies": {
     "@coral-xyz/anchor": "^0.29.0",
     "@coral-xyz/spl-token": "^0.30.0",
@@ -18,7 +22,6 @@
     "@solana/wallet-adapter-react": "^0.15.35",
     "@solana/wallet-adapter-react-ui": "^0.9.35",
     "@solana/wallet-adapter-wallets": "^0.19.32",
-    "@solana/web3.js": "^1.91.7",
     "@tailwindcss/typography": "^0.5.13",
     "@tanstack/react-query": "^5.34.1",
     "@tanstack/react-query-next-experimental": "^5.34.1",
