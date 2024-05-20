@@ -12,6 +12,7 @@
     "@coral-xyz/anchor": "^0.29.0",
     "@coral-xyz/spl-token": "^0.30.0",
     "@metaplex-foundation/js": "^0.20.1",
+    "@noble/hashes": "^1.4.0",
     "@solana/spl-token": "^0.4.6",
     "@solana/wallet-adapter-base": "^0.9.23",
     "@solana/wallet-adapter-react": "^0.15.35",
@@ -35,7 +36,6 @@
     "react-hot-toast": "^2.4.1",
     "react-lazy-load": "^4.0.1",
     "react-use": "^17.5.0",
-    "sha3": "link:@noble/hashes/sha3",
     "swr": "^2.2.5",
     "uuid": "^9.0.1",
     "zustand": "^4.5.2"

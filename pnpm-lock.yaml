@@ -17,6 +17,9 @@ importers:
       '@metaplex-foundation/js':
         specifier: ^0.20.1
         version: 0.20.1(arweave@1.15.1)(bufferutil@4.0.8)(fastestsmallesttextencoderdecoder@1.0.22)(utf-8-validate@5.0.10)
+      '@noble/hashes':
+        specifier: ^1.4.0
+        version: 1.4.0
       '@solana/spl-token':
         specifier: ^0.4.6
         version: 0.4.6(@solana/web3.js@1.91.8(bufferutil@4.0.8)(utf-8-validate@5.0.10))(bufferutil@4.0.8)(fastestsmallesttextencoderdecoder@1.0.22)(utf-8-validate@5.0.10)
@@ -86,9 +89,6 @@ importers:
       react-use:
         specifier: ^17.5.0
         version: 17.5.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      sha3:
-        specifier: link:@noble/hashes/sha3
-        version: link:@noble/hashes/sha3
       swr:
         specifier: ^2.2.5
         version: 2.2.5(react@18.3.1)
