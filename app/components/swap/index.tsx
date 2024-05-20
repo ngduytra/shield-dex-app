@@ -39,7 +39,7 @@ export const useSwapGlob = createGlobalState<{
 });
 
 export default function Swap() {
-  const { routes, swap } = useSwap();
+  // const { routes, swap } = useSwap();
   // const provider = useAnchorProvider();
   // const {
   //   fetchPool,
@@ -56,7 +56,7 @@ export default function Swap() {
   //   return <span className="loading loading-spinner loading-lg"></span>;
   // }
 
-  console.log("thong tin routes", routes);
+  // console.log("thong tin routes", routes);
 
   return (
     <div className="space-y-2">
