@@ -10,6 +10,7 @@ export function useTokenPriceCGKById({ id }: { id: string }) {
 
   return useQuery({
     queryKey: ["get-token-price-cgk", { endpoint: connection.rpcEndpoint, id }],
+    enabled: !!id,
     queryFn: () =>
       axios.get(
         `https://api.coingecko.com/api/v3/simple/price?ids=${id}&vs_currencies=usd`,

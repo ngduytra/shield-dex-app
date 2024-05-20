@@ -9,6 +9,7 @@ import { ClusterProvider } from "./cluster/cluster-data-access";
 import "./globals.css";
 import { classNames } from "./utils/string";
 import MintProvider from "./providers/mint.provider";
+import TokenAccountProvider from "./providers/tokenAccount.provider";
 
 const inter = Inter({ subsets: ["latin"] });
 const ibmPlexSans = IBM_Plex_Sans({
@@ -52,7 +53,9 @@ export default function RootLayout({
           <ClusterProvider>
             <SolanaProvider>
               <MintProvider>
-                <UiProvider>{children}</UiProvider>
+                <TokenAccountProvider>
+                  <UiProvider>{children}</UiProvider>
+                </TokenAccountProvider>
               </MintProvider>
             </SolanaProvider>
           </ClusterProvider>

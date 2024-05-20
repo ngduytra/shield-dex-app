@@ -12,10 +12,10 @@ import {
   useFetchOnePlatformConfig,
   useShieldDexUiProgram,
 } from "@/hooks/useShieldDexProgram";
+import { ShieldSwapRoute, useSwap } from "@/hooks/useSwapHook";
 
 import { useAnchorProvider } from "@/solana/solana-provider";
 
-import toast from "react-hot-toast";
 import {
   NomalizedSwapAccounts,
   NomalizedSwapParams,
@@ -24,6 +24,7 @@ import {
 export const useSwapGlob = createGlobalState<{
   accounts: NomalizedSwapAccounts;
   params: NomalizedSwapParams;
+  bestRoute?: ShieldSwapRoute;
 }>({
   accounts: {
     bidMint: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
@@ -31,31 +32,35 @@ export const useSwapGlob = createGlobalState<{
     taxman: "GZS278mUf69n8Fw5NjRYiPs6fABCzApHNnyVXQtJDEh7",
   },
   params: {
+    askAmount: 0,
     bidAmount: 0,
     limit: 0,
   },
 });
 
 export default function Swap() {
-  const provider = useAnchorProvider();
-  const {
-    fetchPool,
-    initialize,
-    fetchPlatformConfig,
-    createPlatformConfig,
-    swap,
-  } = useShieldDexUiProgram();
-  const { data } = useFetchOnePlatformConfig(
-    "EpmL4ZAsdiKyp4DXEB3GS4zCzgPKTdLG8yqHdcZTnpXw"
-  );
+  const { routes, swap } = useSwap();
+  // const provider = useAnchorProvider();
+  // const {
+  //   fetchPool,
+  //   initialize,
+  //   fetchPlatformConfig,
+  //   createPlatformConfig,
+  //   swap,
+  // } = useShieldDexUiProgram();
+  // const { data } = useFetchOnePlatformConfig(
+  //   "EpmL4ZAsdiKyp4DXEB3GS4zCzgPKTdLG8yqHdcZTnpXw"
+  // );
 
-  if (fetchPlatformConfig.isLoading || fetchPool.isLoading) {
-    return <span className="loading loading-spinner loading-lg"></span>;
-  }
+  // if (fetchPlatformConfig.isLoading || fetchPool.isLoading) {
+  //   return <span className="loading loading-spinner loading-lg"></span>;
+  // }
+
+  console.log("thong tin routes", routes);
 
   return (
     <div className="space-y-2">
-      <div>
+      {/* <div>
         {fetchPool.data &&
           fetchPool.data?.map((pool) => {
             return (
@@ -64,7 +69,7 @@ export default function Swap() {
               </p>
             );
           })}
-      </div>
+      </div> */}
 
       {/* <p className="text-2xl font-bold">
         {JSON.stringify(fetchPlatformConfig.data)}
@@ -146,7 +151,10 @@ export default function Swap() {
       <div className="space-y-1">
         <Pay />
         <div className="flex container justify-center relative ">
-          <button className="btn border-[--bg-body] border-[4px] flex items-center justify-center rounded-lg bg-[--bg-header] text-secondary absolute -top-4 min-h-0 w-10 h-10 p-1">
+          <button
+            className="btn border-[--bg-body] border-[4px] flex items-center justify-center rounded-lg bg-[--bg-header] text-secondary absolute -top-4 min-h-0 w-10 h-10 p-1"
+            disabled
+          >
             <ArrangeVerticalCircle
               className="hover:rotate-180 transform transition-transform duration-200 ease-linear"
               size="24"

@@ -94,6 +94,7 @@ const ModalTokenSelection = ({
           width={24}
           height={24}
           alt="selected-token"
+          className="rounded-full bg-black"
         />
         {selectedToken?.symbol}
         <ArrowDown2 size={10} />

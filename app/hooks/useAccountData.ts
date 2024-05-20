@@ -10,12 +10,13 @@ export function useTokenAccountBalance(address: string) {
   const { connection } = useConnection();
 
   const ataToken = useMemo(() => {
-    if (!provider.publicKey) return;
+    if (!provider.publicKey || !address) return;
     return utils.token.associatedAddress({
       owner: provider.publicKey,
       mint: new PublicKey(address),
     });
   }, [address, provider.publicKey]);
+
   return useQuery({
     queryKey: [
       "get-token-balance",

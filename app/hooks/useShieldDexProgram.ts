@@ -14,6 +14,8 @@ import {
   CreatePlatformConfigParams,
   InitializeAccounts,
   InitializeParams,
+  RouteAccounts,
+  RouteParams,
   SwapAccounts,
   SwapParams,
 } from "@/types/program";
@@ -207,6 +209,132 @@ export function useShieldDexUiProgram() {
     },
   });
 
+  const route = useMutation({
+    mutationKey: ["shieldDexApp", "route", { cluster }],
+    mutationFn: async ({
+      params,
+      accounts,
+    }: {
+      params: RouteParams;
+      accounts: RouteAccounts;
+    }) => {
+      const remainingAccounts: any = [];
+      params.routes.map((r) => {
+        const [escrow] = web3.PublicKey.findProgramAddressSync(
+          [Buffer.from("escrow"), new PublicKey(r.pool).toBuffer()],
+          program.programId
+        );
+        remainingAccounts.push(
+          ...[
+            {
+              pubkey: r.platformConfig,
+              isWritable: false,
+              isSigner: false,
+            },
+            {
+              pubkey: new PublicKey(r.pool),
+              isWritable: false,
+              isSigner: false,
+            },
+            {
+              pubkey: r.taxman,
+              isWritable: false,
+              isSigner: false,
+            },
+            {
+              pubkey: r.bidAmount,
+              isWritable: false,
+              isSigner: false,
+            },
+            {
+              pubkey: utils.token.associatedAddress({
+                mint: new PublicKey(r.bidMint),
+                owner: provider.publicKey,
+              }),
+              isWritable: true,
+              isSigner: false,
+            },
+            {
+              pubkey: utils.token.associatedAddress({
+                mint: new PublicKey(r.bidMint),
+                owner: escrow,
+              }),
+              isWritable: true,
+              isSigner: false,
+            },
+            {
+              pubkey: new PublicKey(r.askMint),
+              isWritable: false,
+              isSigner: false,
+            },
+            {
+              pubkey: utils.token.associatedAddress({
+                mint: new PublicKey(r.askMint),
+                owner: escrow,
+              }),
+              isWritable: true,
+              isSigner: false,
+            },
+            {
+              pubkey: utils.token.associatedAddress({
+                mint: new PublicKey(r.askMint),
+                owner: provider.publicKey,
+              }),
+              isWritable: true,
+              isSigner: false,
+            },
+            {
+              pubkey: escrow,
+              isWritable: false,
+              isSigner: false,
+            },
+            {
+              pubkey: utils.token.associatedAddress({
+                mint: new PublicKey(r.bidMint),
+                owner: r.taxman,
+              }),
+              isWritable: true,
+              isSigner: false,
+            },
+          ]
+        );
+      });
+      if (params.sendAndConfirm) {
+        return await program.methods
+          .route(params.bidAmount, params.limit)
+          .accounts({
+            authority: provider.publicKey,
+            this: program.programId,
+            tokenProgram: utils.token.TOKEN_PROGRAM_ID,
+            associatedTokenProgram: utils.token.ASSOCIATED_PROGRAM_ID,
+            systemProgram: web3.SystemProgram.programId,
+            rent: web3.SYSVAR_RENT_PUBKEY,
+          })
+          .remainingAccounts(remainingAccounts)
+          .rpc();
+      }
+      return await program.methods
+        .route(params.bidAmount, params.limit)
+        .accounts({
+          authority: provider.publicKey,
+          this: program.programId,
+          tokenProgram: utils.token.TOKEN_PROGRAM_ID,
+          associatedTokenProgram: utils.token.ASSOCIATED_PROGRAM_ID,
+          systemProgram: web3.SystemProgram.programId,
+          rent: web3.SYSVAR_RENT_PUBKEY,
+        })
+        .remainingAccounts(remainingAccounts)
+        .transaction();
+    },
+    onSuccess: (signature) => {
+      if (typeof signature === "string")
+        transactionToast(signature, "Swapped successfully");
+    },
+    onError: (e) => {
+      toast.error("Failed to swap ");
+    },
+  });
+
   return {
     program,
     programId,
@@ -216,5 +344,6 @@ export function useShieldDexUiProgram() {
     fetchPool,
     fetchPlatformConfig,
     createPlatformConfig,
+    route,
   };
 }

@@ -10,11 +10,10 @@ import ModalTokenSelection from "../modal-token-selection";
 export default function Pay() {
   const [swapGlob, setSwapGlob] = useSwapGlob();
   const [tokenId, setTokenId] = useState("solana");
-  const tokenData = useTokenAccountBalance(
-    // swapGlob?.accounts?.bidMint ||
-    "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU"
-  );
+  const tokenData = useTokenAccountBalance(swapGlob?.accounts?.bidMint);
   const { data } = useTokenPriceCGKById({ id: tokenId });
+
+  console.log("thong tin bid mint: ", swapGlob?.accounts?.bidMint);
 
   return (
     <div className="bg-[--bg-card] p-4 rounded-2xl flex justify-between">
@@ -58,7 +57,7 @@ export default function Pay() {
                 ...prev,
                 accounts: {
                   ...prev?.accounts,
-                  askMint: mint.address,
+                  bidMint: mint.address,
                 },
               }));
             }}

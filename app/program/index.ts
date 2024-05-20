@@ -325,13 +325,13 @@ export type ShieldDexPg = {
         },
         {
           name: "pool";
-          isMut: true;
+          isMut: false;
           isSigner: false;
           docs: ["Pool"];
         },
         {
           name: "taxman";
-          isMut: true;
+          isMut: false;
           isSigner: false;
         },
         {
@@ -718,6 +718,53 @@ export type ShieldDexPg = {
           type: "publicKey";
         }
       ];
+    },
+    {
+      name: "route";
+      accounts: [
+        {
+          name: "authority";
+          isMut: true;
+          isSigner: true;
+          docs: ["Authority"];
+        },
+        {
+          name: "this";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "tokenProgram";
+          isMut: false;
+          isSigner: false;
+          docs: ["System programs"];
+        },
+        {
+          name: "associatedTokenProgram";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "systemProgram";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "rent";
+          isMut: false;
+          isSigner: false;
+        }
+      ];
+      args: [
+        {
+          name: "bidAmount";
+          type: "u64";
+        },
+        {
+          name: "limit";
+          type: "u64";
+        }
+      ];
     }
   ];
   accounts: [
@@ -1023,6 +1070,36 @@ export type ShieldDexPg = {
         {
           name: "updatedAt";
           type: "i64";
+          index: false;
+        }
+      ];
+    },
+    {
+      name: "RouteEvent";
+      fields: [
+        {
+          name: "authority";
+          type: "publicKey";
+          index: false;
+        },
+        {
+          name: "bidMint";
+          type: "publicKey";
+          index: false;
+        },
+        {
+          name: "askMint";
+          type: "publicKey";
+          index: false;
+        },
+        {
+          name: "bidAmount";
+          type: "u64";
+          index: false;
+        },
+        {
+          name: "askAmount";
+          type: "u64";
           index: false;
         }
       ];
@@ -1536,13 +1613,13 @@ export const IDL: ShieldDexPg = {
         },
         {
           name: "pool",
-          isMut: true,
+          isMut: false,
           isSigner: false,
           docs: ["Pool"],
         },
         {
           name: "taxman",
-          isMut: true,
+          isMut: false,
           isSigner: false,
         },
         {
@@ -1930,6 +2007,53 @@ export const IDL: ShieldDexPg = {
         },
       ],
     },
+    {
+      name: "route",
+      accounts: [
+        {
+          name: "authority",
+          isMut: true,
+          isSigner: true,
+          docs: ["Authority"],
+        },
+        {
+          name: "this",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "tokenProgram",
+          isMut: false,
+          isSigner: false,
+          docs: ["System programs"],
+        },
+        {
+          name: "associatedTokenProgram",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "systemProgram",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "rent",
+          isMut: false,
+          isSigner: false,
+        },
+      ],
+      args: [
+        {
+          name: "bidAmount",
+          type: "u64",
+        },
+        {
+          name: "limit",
+          type: "u64",
+        },
+      ],
+    },
   ],
   accounts: [
     {
@@ -2239,6 +2363,36 @@ export const IDL: ShieldDexPg = {
       ],
     },
     {
+      name: "RouteEvent",
+      fields: [
+        {
+          name: "authority",
+          type: "publicKey",
+          index: false,
+        },
+        {
+          name: "bidMint",
+          type: "publicKey",
+          index: false,
+        },
+        {
+          name: "askMint",
+          type: "publicKey",
+          index: false,
+        },
+        {
+          name: "bidAmount",
+          type: "u64",
+          index: false,
+        },
+        {
+          name: "askAmount",
+          type: "u64",
+          index: false,
+        },
+      ],
+    },
+    {
       name: "SwapEvent",
       fields: [
         {
@@ -2425,5 +2579,7 @@ export const IDL: ShieldDexPg = {
 
 // After updating your program ID (e.g. after running `anchor keys sync`) update the value below.
 export const programId = new PublicKey(
-  "7xCZgNDZ6da6Rup5eztPfPxuVNwVuvRac3nQK9U5ggEg"
+  "GFy1fNKoyga5RJVr23CoHAP87EzhW9pohVkaUYkJQE6L"
 );
+
+// OLD ADDRESS: 7xCZgNDZ6da6Rup5eztPfPxuVNwVuvRac3nQK9U5ggEg

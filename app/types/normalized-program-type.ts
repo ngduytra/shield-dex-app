@@ -16,6 +16,7 @@ export type NomalizedInitializeAccounts = {
 export type NomalizedSwapParams = {
   bidAmount: number;
   limit: number;
+  askAmount: number;
 };
 
 export type NomalizedSwapAccounts = {

@@ -1,3 +1,4 @@
+import { RouteInfo } from "@/hooks/useSwapHook";
 import { BN } from "@coral-xyz/anchor";
 import { PublicKey } from "@solana/web3.js";
 
@@ -38,3 +39,13 @@ export type SwapAccounts = {
   askMint: PublicKey;
   taxman: PublicKey;
 };
+
+// route
+export type RouteParams = {
+  bidAmount: BN;
+  limit: BN;
+  routes: RouteInfo[];
+  sendAndConfirm: boolean;
+};
+
+export type RouteAccounts = {};

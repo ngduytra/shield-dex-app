@@ -8,5 +8,6 @@ export const getUnknownToken = (address: string) => {
     name: "UKNOWN",
     symbol: "UKNOWN",
     tags: ["unknown"],
+    extensions: { coingeckoId: null },
   };
 };

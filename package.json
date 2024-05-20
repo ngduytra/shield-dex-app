@@ -11,6 +11,7 @@
   "dependencies": {
     "@coral-xyz/anchor": "^0.29.0",
     "@coral-xyz/spl-token": "^0.30.0",
+    "@metaplex-foundation/js": "^0.20.1",
     "@solana/spl-token": "^0.4.6",
     "@solana/wallet-adapter-base": "^0.9.23",
     "@solana/wallet-adapter-react": "^0.15.35",
@@ -27,8 +28,10 @@
     "immer": "^10.1.1",
     "jotai": "^2.8.0",
     "next": "14.2.2",
+    "numbro": "^2.5.0",
     "react": "^18.2.0",
     "react-dom": "^18",
+    "react-fast-compare": "^3.2.2",
     "react-hot-toast": "^2.4.1",
     "react-lazy-load": "^4.0.1",
     "react-use": "^17.5.0",
