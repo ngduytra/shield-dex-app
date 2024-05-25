@@ -28,11 +28,9 @@ export default function Receive() {
         </div>
       </div>
       <div className="space-y-3">
-        <div>
-          <p className="text-secondary text-sm">
-            Balance: {tokenData.data?.value.uiAmount || 0.0}
-          </p>
-        </div>
+        <p className="text-secondary text-sm text-end">
+          Balance: {tokenData.data?.value.uiAmount || 0.0}
+        </p>
         <div className="flex justify-end">
           <ModalTokenSelection
             selectedAddress={swapGlob.accounts.askMint}

@@ -30,6 +30,7 @@ import { WRAPPED_SOL_MINT, toPublicKey } from "@metaplex-foundation/js";
 import { useMintByAddress } from "@/providers/mint.provider";
 import { useShieldDexUiProgram } from "./useShieldDexProgram";
 import { useMints, useSpl } from "./splHook";
+import { initialize } from "next/dist/server/lib/render-server";
 
 export enum Platform {
   ShieldSwap = "ShieldSwap",
@@ -48,8 +49,13 @@ export type PoolPairLpData = {
   swapFee: BN;
 };
 
-export type PoolActionState = IdlTypes<ShieldDexPg>["PoolState"];
-export declare const MintActionStates: Record<string, PoolActionState>;
+// export type PoolActionState = IdlTypes<ShieldDexPg>["PoolState"];
+// export const MintActionStates: Record<string, PoolActionState> = {
+//   Uninitialized: "Uninitialized",
+//   Initialized: "Initialized",
+//   Paused: "Paused",
+//   Canceled: "Canceled",
+// };
 
 export type RouteInfo = {
   platformConfig: PublicKey;
@@ -223,6 +229,7 @@ export const useWrapSol = () => {
  * @returns Oracles functions
  */
 export const useOracles = () => {
+  const provider = useAnchorProvider();
   const { getTokenBalanceAddress } = useGetTokenAccountBalance();
   const calcNormalizedWeight = useCallback((weights: BN[], weightToken: BN) => {
     const numWeightsIn = weights.map((value) =>
@@ -245,7 +252,12 @@ export const useOracles = () => {
       // Just to make sure inputMint exist in pool
       if (mintIdx === -1) throw new Error("Can not find mint in pool");
 
-      const inputMintReserve = await getTokenBalanceAddress(inputMint);
+      const ataToken = utils.token.associatedAddress({
+        owner: provider.publicKey,
+        mint: inputMint,
+      });
+
+      const inputMintReserve = await getTokenBalanceAddress(ataToken);
       const [escrowAB] = PublicKey.findProgramAddressSync(
         [Buffer.from("escrow"), poolPublicKey.toBuffer()],
         programId
@@ -468,7 +480,6 @@ export const useAllRoutes = () => {
     fetchPool: { data: pools },
   } = useShieldDexUiProgram();
 
-  console.log("thong tin pools: ", pools);
   const { getTokenBalanceAddress } = useGetTokenAccountBalance();
   // Get pools tvl > 1000$
   const validPools = useMemo(async () => {
@@ -503,7 +514,7 @@ export const useAllRoutes = () => {
     for (const address in pools) {
       const { mintA, mintB, state } = pools[address];
       const mintAddresses = [mintA.toBase58(), mintB.toBase58()];
-      if (!isEqual(state, MintActionStates.Active)) continue;
+      if (!state["initialized"]) continue;
       for (let i = 0; i < mintAddresses.length; i++) {
         for (let j = 0; j < mintAddresses.length; j++) {
           const bidMint = mintAddresses[i];

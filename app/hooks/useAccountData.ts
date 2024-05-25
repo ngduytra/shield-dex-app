@@ -39,19 +39,12 @@ export function useNativeBalance(userAddress: string) {
 
 export function useGetTokenAccountBalance() {
   const { connection } = useConnection();
-  const provider = useAnchorProvider();
 
   const getTokenBalanceAddress = useCallback(
-    async (address: PublicKey) => {
-      if (!provider.publicKey) throw Error("Invalid wallet");
-      const ataToken = utils.token.associatedAddress({
-        owner: provider.publicKey,
-        mint: new PublicKey(address),
-      });
-
+    async (ataToken: PublicKey) => {
       return await connection.getTokenAccountBalance(ataToken);
     },
-    [connection, provider.publicKey]
+    [connection]
   );
 
   return { getTokenBalanceAddress };

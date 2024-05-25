@@ -12,7 +12,7 @@ import {
   useFetchOnePlatformConfig,
   useShieldDexUiProgram,
 } from "@/hooks/useShieldDexProgram";
-import { ShieldSwapRoute } from "@/hooks/useSwapHook";
+import { ShieldSwapRoute, useSwap } from "@/hooks/useSwapHook";
 
 import { useAnchorProvider } from "@/solana/solana-provider";
 
@@ -27,7 +27,7 @@ export const useSwapGlob = createGlobalState<{
   bestRoute?: ShieldSwapRoute;
 }>({
   accounts: {
-    bidMint: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+    bidMint: "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU",
     askMint: "SENBBKVCM7homnf5RX9zqpf1GFe935hnbU4uVzY1Y6M",
     taxman: "GZS278mUf69n8Fw5NjRYiPs6fABCzApHNnyVXQtJDEh7",
   },
@@ -39,7 +39,7 @@ export const useSwapGlob = createGlobalState<{
 });
 
 export default function Swap() {
-  // const { routes, swap } = useSwap();
+  const { routes, swap } = useSwap();
   // const provider = useAnchorProvider();
   // const {
   //   fetchPool,
@@ -56,7 +56,7 @@ export default function Swap() {
   //   return <span className="loading loading-spinner loading-lg"></span>;
   // }
 
-  // console.log("thong tin routes", routes);
+  console.log("thong tin routes", routes);
 
   return (
     <div className="space-y-2">

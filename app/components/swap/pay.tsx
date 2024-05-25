@@ -13,8 +13,6 @@ export default function Pay() {
   const tokenData = useTokenAccountBalance(swapGlob?.accounts?.bidMint);
   const { data } = useTokenPriceCGKById({ id: tokenId });
 
-  console.log("thong tin bid mint: ", swapGlob?.accounts?.bidMint);
-
   return (
     <div className="bg-[--bg-card] p-4 rounded-2xl flex justify-between">
       <div className=" space-y-1">
@@ -46,7 +44,7 @@ export default function Pay() {
       <div className="space-y-3">
         <div className="flex justify-end">
           <p className="text-secondary text-sm">
-            Balance: {tokenData.data?.value.uiAmount?.toFixed(4)}
+            Balance: {tokenData.data?.value.uiAmount?.toFixed(4) || 0.0}
           </p>
         </div>
         <div>
