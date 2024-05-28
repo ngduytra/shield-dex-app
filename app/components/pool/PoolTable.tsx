@@ -1,7 +1,28 @@
+"use client";
+import { useMemo } from "react";
 import PoolRecord from "./PoolRecord";
 import ModalCreatePool from "./create-pool-modal";
 
+import { useShieldDexUiProgram } from "@/hooks/useShieldDexProgram";
+
 const PoolTable = () => {
+  const { fetchPool } = useShieldDexUiProgram();
+
+  const poolList = useMemo(() => {
+    if (fetchPool.isLoading)
+      return <span className="loading loading-spinner loading-lg"></span>;
+    console.log("fetchPool.data: ", fetchPool.data);
+    return fetchPool.data?.map((pool) => {
+      return (
+        <PoolRecord
+          key={pool.publicKey.toBase58()}
+          poolAddress={pool.publicKey}
+          poolData={pool.account}
+        />
+      );
+    });
+  }, [fetchPool.data, fetchPool.isLoading]);
+
   return (
     <div className="mt-12">
       <div className="flex justify-between items-center mb-4">
@@ -50,12 +71,7 @@ const PoolTable = () => {
           <div className="flex-1">Volume 24H</div>
           <div className="flex-1">Fee 24H</div>
         </div>
-        <div className="w-full">
-          <PoolRecord />
-          <PoolRecord />
-          <PoolRecord />
-          <PoolRecord />
-        </div>
+        <div className="w-full">{poolList}</div>
       </div>
     </div>
   );

@@ -45,12 +45,14 @@ const RenderCommonToken = ({ mint }: { mint: MintMetadata }) => {
 
 type ModalTokenSelectionProps = {
   selectedAddress: string;
-  onChange: (t: MintMetadata) => void;
+  onChange?: (t: MintMetadata) => void;
+  disabled?: boolean;
 };
 
 const ModalTokenSelection = ({
   selectedAddress,
   onChange,
+  disabled = false,
 }: ModalTokenSelectionProps) => {
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
@@ -79,13 +81,14 @@ const ModalTokenSelection = ({
   };
 
   const handleSetToken = (t: MintMetadata) => {
-    onChange(t);
+    if (onChange) onChange(t);
     toggle();
   };
 
   return (
     <>
       <button
+        disabled={disabled}
         onClick={toggle}
         className="rounded-[30px] text-primary-content p-3 border border-[--stroke-default] inline-flex items-center gap-2"
       >

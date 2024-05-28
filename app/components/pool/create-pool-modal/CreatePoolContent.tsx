@@ -147,8 +147,8 @@ export default function CreatePoolContent() {
       balanceB.data?.value.uiAmount < initializeData.params.amountB
     );
   }, [
-    balanceA.data?.value.uiAmount,
-    balanceB.data?.value.uiAmount,
+    balanceA.data?.value?.uiAmount,
+    balanceB.data?.value?.uiAmount,
     balanceQuery.data,
     initializeData.params.amountA,
     initializeData.params.amountB,

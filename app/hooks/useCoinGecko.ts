@@ -37,3 +37,15 @@ export function useGetTokenPriceCGKByAddress() {
 
   return { getTokenPriceCGK };
 }
+
+export function useTokenPriceCGKByAddress(address: string) {
+  return useQuery({
+    queryKey: ["get-token-price-cgk", { address }],
+    enabled: !!address,
+    queryFn: () =>
+      axios.get(
+        `https://api.coingecko.com/api/v3/simple/token_price/solana?contract_addresses=${address}&vs_currencies=usd`,
+        { headers: { "x-cg-demo-api-key": "CG-bbJyjnmQ9vr1iqK9cH1LiHEf" } }
+      ),
+  });
+}

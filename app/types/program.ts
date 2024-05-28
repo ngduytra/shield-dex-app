@@ -26,6 +26,29 @@ export type InitializeAccounts = {
   mintB: PublicKey;
 };
 
+// Add liquidity
+export type AddLiquidityParams = {
+  amountA: BN;
+  amountB: BN;
+};
+
+export type AddLiquidityAccounts = {
+  mintA: PublicKey;
+  mintB: PublicKey;
+  pool: PublicKey;
+};
+
+// Remove liquidity
+export type RemoveLiquidityParams = {
+  amountLp: BN;
+};
+
+export type RemoveLiquidityAccounts = {
+  mintA: PublicKey;
+  mintB: PublicKey;
+  pool: PublicKey;
+};
+
 // swap
 export type SwapParams = {
   bidAmount: BN;

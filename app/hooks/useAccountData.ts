@@ -50,7 +50,7 @@ export function useGetTokenAccountBalance() {
   return { getTokenBalanceAddress };
 }
 
-export function useCompareWithBalance(amount: number, address: string) {
+export function useCompareWithBalance() {
   const { connection } = useConnection();
 
   const getTokenBalanceAddress = useCallback(

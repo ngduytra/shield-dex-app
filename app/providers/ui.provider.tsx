@@ -72,7 +72,7 @@ export default function UiProvider({ children }: { children: ReactNode }) {
         {/* <div className="flex justify-center flex-row">
           <div className="artboard phone-2">{children}</div>
         </div> */}
-        x{children}
+        {children}
       </div>
     </div>
   );

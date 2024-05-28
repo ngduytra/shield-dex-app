@@ -10,10 +10,14 @@ import { useAnchorProvider } from "../solana/solana-provider";
 
 import { IDL, programId } from "@/program";
 import {
+  AddLiquidityAccounts,
+  AddLiquidityParams,
   CreatePlatformConfigAccounts,
   CreatePlatformConfigParams,
   InitializeAccounts,
   InitializeParams,
+  RemoveLiquidityAccounts,
+  RemoveLiquidityParams,
   RouteAccounts,
   RouteParams,
   SwapAccounts,
@@ -144,6 +148,129 @@ export function useShieldDexUiProgram() {
     },
     onSuccess: (signature) => {
       transactionToast(signature, "Initialized successfully");
+    },
+    onError: (e) => {
+      toast.error("Failed to run program");
+    },
+  });
+
+  const addLiquidity = useMutation({
+    mutationKey: ["shieldDexApp", "addLiquidity", { cluster }],
+    mutationFn: async ({
+      params,
+      accounts,
+    }: {
+      params: AddLiquidityParams;
+      accounts: AddLiquidityAccounts;
+    }) => {
+      const [escrowAB] = web3.PublicKey.findProgramAddressSync(
+        [Buffer.from("escrow"), accounts.pool.toBuffer()],
+        program.programId
+      );
+      const [lpMintAB] = web3.PublicKey.findProgramAddressSync(
+        [Buffer.from("lp_mint"), accounts.pool.toBuffer()],
+        program.programId
+      );
+
+      return program.methods
+        .addLiquidity(params.amountA, params.amountB)
+        .accounts({
+          authority: provider.publicKey,
+          pool: accounts.pool,
+          mintA: accounts.mintA,
+          srcA: utils.token.associatedAddress({
+            mint: accounts.mintA,
+            owner: provider.publicKey,
+          }),
+          treasuryA: utils.token.associatedAddress({
+            mint: accounts.mintA,
+            owner: escrowAB,
+          }),
+          mintB: accounts.mintB,
+          srcB: utils.token.associatedAddress({
+            mint: accounts.mintB,
+            owner: provider.publicKey,
+          }),
+          treasuryB: utils.token.associatedAddress({
+            mint: accounts.mintB,
+            owner: escrowAB,
+          }),
+          lpMint: lpMintAB,
+          dstLp: utils.token.associatedAddress({
+            mint: lpMintAB,
+            owner: provider.publicKey,
+          }),
+          escrow: escrowAB,
+          tokenProgram: utils.token.TOKEN_PROGRAM_ID,
+          associatedTokenProgram: utils.token.ASSOCIATED_PROGRAM_ID,
+          systemProgram: web3.SystemProgram.programId,
+          rent: web3.SYSVAR_RENT_PUBKEY,
+        })
+        .rpc();
+    },
+    onSuccess: (signature) => {
+      transactionToast(signature, "Add liquidity successfully");
+    },
+    onError: (e) => {
+      toast.error("Failed to run program");
+    },
+  });
+
+  const removeLiquidity = useMutation({
+    mutationKey: ["shieldDexApp", "removeLiquidity", { cluster }],
+    mutationFn: async ({
+      params,
+      accounts,
+    }: {
+      params: RemoveLiquidityParams;
+      accounts: RemoveLiquidityAccounts;
+    }) => {
+      const [escrowAB] = web3.PublicKey.findProgramAddressSync(
+        [Buffer.from("escrow"), accounts.pool.toBuffer()],
+        program.programId
+      );
+      const [lpMintAB] = web3.PublicKey.findProgramAddressSync(
+        [Buffer.from("lp_mint"), accounts.pool.toBuffer()],
+        program.programId
+      );
+
+      return program.methods
+        .removeLiquidity(params.amountLp)
+        .accounts({
+          authority: provider.publicKey,
+          pool: accounts.pool,
+          mintA: accounts.mintA,
+          treasuryA: utils.token.associatedAddress({
+            mint: accounts.mintA,
+            owner: escrowAB,
+          }),
+          dstA: utils.token.associatedAddress({
+            mint: accounts.mintA,
+            owner: provider.publicKey,
+          }),
+          mintB: accounts.mintB,
+          treasuryB: utils.token.associatedAddress({
+            mint: accounts.mintB,
+            owner: escrowAB,
+          }),
+          dstB: utils.token.associatedAddress({
+            mint: accounts.mintB,
+            owner: provider.publicKey,
+          }),
+          lpMint: lpMintAB,
+          srcLp: utils.token.associatedAddress({
+            mint: lpMintAB,
+            owner: provider.publicKey,
+          }),
+          escrow: escrowAB,
+          tokenProgram: utils.token.TOKEN_PROGRAM_ID,
+          associatedTokenProgram: utils.token.ASSOCIATED_PROGRAM_ID,
+          systemProgram: web3.SystemProgram.programId,
+        })
+        .rpc();
+    },
+    onSuccess: (signature) => {
+      transactionToast(signature, "Add liquidity successfully");
     },
     onError: (e) => {
       toast.error("Failed to run program");
@@ -339,8 +466,10 @@ export function useShieldDexUiProgram() {
     program,
     programId,
     // getProgramAccount,
+    removeLiquidity,
     swap,
     initialize,
+    addLiquidity,
     fetchPool,
     fetchPlatformConfig,
     createPlatformConfig,
